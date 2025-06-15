@@ -1,0 +1,47 @@
+{% extends 'principal/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Productos Disponibles</h1>
+
+    {% if productos %}
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            {% for p in productos %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        {% if p.imagen %}
+                            <img src="{{ p.imagen }}" class="card-img-top img-fluid" alt="{{ p.nombre }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ p.nombre }}</h5>
+                            <p class="card-text">{{ p.descripcion }}</p>
+                            <p><strong>Precio:</strong> S/. {{ p.precio }}</p>
+
+                            {% if p.usuario.tienda %}
+                                <p><strong>Tienda:</strong> {{ p.usuario.tienda.nombre }}</p>
+                                <p><strong>Dirección:</strong> {{ p.usuario.tienda.direccion }}</p>
+                                <a href="{% url 'ver_tienda' p.usuario.id %}" class="btn btn-link p-0">
+                                    Ver tienda
+                                </a>
+                            {% else %}
+                                <p class="text-muted"><em>Sin información de tienda</em></p>
+                            {% endif %}
+
+                            <form method="post" action="{% url 'agregar_al_carrito' p.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-success mt-2">Agregar al carrito 🛒</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <div class="alert alert-info">
+            No hay productos disponibles.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'principal/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Carrito de compras</h1>
+
+    {% if productos %}
+        <ul class="list-group mb-4">
+            {% for item in productos %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>{{ item.producto.nombre }}</strong><br>
+                        {{ item.cantidad }} x S/ {{ item.producto.precio }} = 
+                        <strong>S/ {{ item.subtotal }}</strong>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <form method="post" action="{% url 'aumentar_cantidad' item.producto.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-success">+</button>
+                        </form>
+                        <form method="post" action="{% url 'disminuir_cantidad' item.producto.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-warning">-</button>
+                        </form>
+                        <form method="post" action="{% url 'eliminar_del_carrito' item.producto.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <p class="fs-5"><strong>Total: S/ {{ total }}</strong></p>
+    {% else %}
+        <div class="alert alert-info">
+            Tu carrito está vacío.
+        </div>
+    {% endif %}
+
+    <a href="{% url 'lista_productos' %}" class="btn btn-primary">Seguir comprando</a>
+</div>
+{% endblock %}

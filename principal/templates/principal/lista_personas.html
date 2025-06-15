@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Personas</title>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'inicio' %}">Inicio</a>
+    </nav>
+    <h1>Personas</h1>
+    <ul>
+        {% for persona in personas %}
+            <li>{{ persona.nombre }} - {{ persona.apellido }}</li>
+        {% empty %}
+            <li>No hay personas registradas.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

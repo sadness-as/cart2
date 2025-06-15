@@ -1,0 +1,38 @@
+{% extends 'principal/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Mis Productos</h1>
+
+    {% if productos %}
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for producto in productos %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        {% if producto.imagen %}
+                            <img src="{{ producto.imagen }}" class="card-img-top" alt="Imagen de {{ producto.nombre }}">
+                        {% else %}
+                            <img src="https://via.placeholder.com/300x200?text=Sin+Imagen" class="card-img-top" alt="Sin imagen">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ producto.nombre }}</h5>
+                            <p class="card-text">Precio: S/. {{ producto.precio }}</p>
+                        </div>
+                        <div class="card-footer text-end">
+                            <a href="{% url 'eliminar_producto' producto.id %}" 
+                               class="btn btn-outline-danger btn-sm"
+                               onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?');">
+                                🗑️ Eliminar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            No has publicado ningún producto.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

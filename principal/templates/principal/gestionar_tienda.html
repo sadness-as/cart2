@@ -1,0 +1,18 @@
+{% extends 'principal/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Gestionar Tienda</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary mt-2">Guardar</button>
+                <a href="{% url 'mis_productos' %}" class="btn btn-secondary mt-2">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

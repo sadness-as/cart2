@@ -1,0 +1,28 @@
+{% extends "principal/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <h2 class="mb-4 text-center">Registrar Producto</h2>
+
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-success">Guardar Producto</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="text-center mt-3">
+        <a href="{% url 'lista_productos' %}" class="btn btn-link">← Volver a Productos</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
